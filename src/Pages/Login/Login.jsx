@@ -45,6 +45,8 @@ export default function Login() {
         //form validation
 
         console.log(inputObj);
+
+        //login function
     };
 
     const handelChange = (e) => {

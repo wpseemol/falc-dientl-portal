@@ -1,13 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {
+    useCreateUserWithEmailAndPassword,
+    useUpdateProfile,
+} from 'react-firebase-hooks/auth';
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import { VscLoading } from 'react-icons/vsc';
+import { Link, useNavigate } from 'react-router-dom';
 import FromBg from '../../Components/FromBg/FromBg';
 import FromError from '../../Components/FromError/FromError';
 import LogoSection from '../../Components/LogoSection/LogoSection';
 import { useErrorContext } from '../../context/ErrorMassageContext';
+import { auth } from '../../firebase/firebase';
 
 export default function SingUp() {
     const [isPassShow, setIsPassShow] = useState(false);
+
+    const navigate = useNavigate();
+
+    const [createUserWithEmailAndPassword, , loading, error] =
+        useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     const emptyInputObj = {
         fName: '',
@@ -43,7 +55,7 @@ export default function SingUp() {
                 setIsError(true);
                 return;
             } else {
-                if (inputObj.password.length <= 6) {
+                if (inputObj.password.length < 5) {
                     setErrorMassage('Password must be minimum 6 character');
                     setIsError(true);
                     return;
@@ -51,9 +63,27 @@ export default function SingUp() {
             }
         }
 
-        console.log(inputObj);
-
-        setInputObj(emptyInputObj);
+        createUserWithEmailAndPassword(inputObj.email, inputObj.password)
+            .then((data) => {
+                if (data) {
+                    let fullName = inputObj.fName + ' ' + inputObj.lName;
+                    updateProfile(fullName, null)
+                        .then((updated) => {
+                            if (updated) {
+                                navigate('/login');
+                                setInputObj(emptyInputObj);
+                            }
+                        })
+                        .catch((e) => {
+                            setErrorMassage(e.message);
+                            setIsError(true);
+                        });
+                }
+            })
+            .catch((e) => {
+                setErrorMassage(e.message);
+                setIsError(true);
+            });
     };
 
     const handelChange = (e) => {
@@ -67,6 +97,19 @@ export default function SingUp() {
             }, 700);
         }
     };
+
+    useEffect(() => {
+        if (error) {
+            setIsError(true);
+            setErrorMassage(error.message);
+            return;
+        }
+        if (updateError) {
+            setIsError(true);
+            setErrorMassage(updateError.message);
+            return;
+        }
+    }, [error, setErrorMassage, setIsError, updateError]);
 
     return (
         <>
@@ -170,11 +213,21 @@ export default function SingUp() {
                             </div>
 
                             <hr />
-                            <input
+
+                            <button
                                 type="submit"
-                                value="Sing Up"
-                                className="w-full py-4 bg-[#03AEF0] text-white font-bold"
-                            />
+                                className="w-full py-4 bg-[#03AEF0] text-white font-bold">
+                                <span className="text-center">
+                                    {loading || updating ? (
+                                        <span className="flex justify-center items-center gap-2 cursor-wait">
+                                            <VscLoading className="animate-spin text-3xl" />
+                                            Loading...
+                                        </span>
+                                    ) : (
+                                        <span>Sing Up</span>
+                                    )}
+                                </span>
+                            </button>
                         </form>
                         <div className="text-[#03AEF0] text-sm py-3 text-center">
                             {`Have account`}{' '}
