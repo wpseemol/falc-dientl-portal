@@ -1,3 +1,111 @@
+import { useState } from 'react';
+import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
+import FromBg from '../../Components/FromBg/FromBg';
+import LogoSection from '../../Components/LogoSection/LogoSection';
+
 export default function SingUp() {
-    return <div>this is sing</div>;
+    const [isPassShow, setIsPassShow] = useState(false);
+
+    return (
+        <>
+            <FromBg>
+                <div className="bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm -mt-3">
+                    {/* this is logo section */}
+                    <LogoSection />
+
+                    <form action="">
+                        <label
+                            htmlFor="fName"
+                            className="text-xs font-light px-6 mt-2">
+                            First Name
+                        </label>
+                        <br />
+
+                        <input
+                            type="text"
+                            name="fName"
+                            id="fName"
+                            placeholder="Benjamin"
+                            className="focus:outline-none px-6 py-1 mb-1 text-xl"
+                        />
+
+                        <hr />
+
+                        <label
+                            htmlFor="lName"
+                            className="text-xs font-light px-6 mt-2">
+                            Last Name
+                        </label>
+                        <br />
+
+                        <input
+                            type="text"
+                            name="lName"
+                            id="lName"
+                            placeholder="James"
+                            className="focus:outline-none px-6 py-1 mb-1 text-xl"
+                        />
+
+                        <hr />
+
+                        <label
+                            htmlFor="email"
+                            className="text-xs font-light px-6 mt-2">
+                            E-mail
+                        </label>
+                        <br />
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            placeholder="example@any.com"
+                            className="focus:outline-none px-6 py-1 mb-1 text-xl"
+                        />
+
+                        <hr />
+
+                        <label
+                            htmlFor="password"
+                            className="text-xs font-light px-6 mt-2">
+                            Password
+                        </label>
+
+                        <br />
+
+                        <div className="relative group">
+                            <input
+                                type={isPassShow ? 'text' : 'password'}
+                                name="password"
+                                id="password"
+                                placeholder={isPassShow ? 'password' : '******'}
+                                className="focus:outline-none px-6 py-1 text-xl mb-1  "
+                            />
+                            <span
+                                onClick={() => {
+                                    setIsPassShow(!isPassShow);
+                                }}
+                                className="absolute right-6 top-2 hidden group-hover:inline-block cursor-pointer text-xl">
+                                {isPassShow ? <BiSolidHide /> : <BiSolidShow />}
+                            </span>
+                        </div>
+
+                        <hr />
+                        <input
+                            type="submit"
+                            value="Login"
+                            className="w-full py-4 bg-[#03AEF0] text-white font-bold"
+                        />
+                    </form>
+                    <div className="text-[#03AEF0] text-sm py-3 text-center">
+                        {`Have account`}{' '}
+                        <Link to="/login" className="font-bold">
+                            Login
+                        </Link>
+                    </div>
+                </div>
+            </FromBg>
+        </>
+    );
 }
