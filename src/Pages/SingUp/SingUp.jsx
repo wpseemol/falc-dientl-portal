@@ -9,12 +9,14 @@ import { useErrorContext } from '../../context/ErrorMassageContext';
 export default function SingUp() {
     const [isPassShow, setIsPassShow] = useState(false);
 
-    const [inputObj, setInputObj] = useState({
+    const emptyInputObj = {
         fName: '',
         lName: '',
         email: '',
         password: '',
-    });
+    };
+
+    const [inputObj, setInputObj] = useState(emptyInputObj);
 
     const { isError, setIsError, setErrorMassage } = useErrorContext();
 
@@ -50,7 +52,8 @@ export default function SingUp() {
         }
 
         console.log(inputObj);
-        event.target.reset();
+
+        setInputObj(emptyInputObj);
     };
 
     const handelChange = (e) => {
@@ -169,7 +172,7 @@ export default function SingUp() {
                             <hr />
                             <input
                                 type="submit"
-                                value="Login"
+                                value="Sing Up"
                                 className="w-full py-4 bg-[#03AEF0] text-white font-bold"
                             />
                         </form>

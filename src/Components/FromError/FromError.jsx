@@ -8,7 +8,7 @@ export default function FromError() {
     useEffect(() => {
         const timeOutId = setTimeout(() => {
             setIsError(false);
-        }, 8000);
+        }, 10000);
 
         return () => {
             clearTimeout(timeOutId);
