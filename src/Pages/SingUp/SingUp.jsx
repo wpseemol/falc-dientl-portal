@@ -66,8 +66,15 @@ export default function SingUp() {
         createUserWithEmailAndPassword(inputObj.email, inputObj.password)
             .then((data) => {
                 if (data) {
-                    let fullName = inputObj.fName + ' ' + inputObj.lName;
-                    updateProfile(fullName, null)
+                    let profileUpdateObj = {
+                        displayName:
+                            inputObj.fName || inputObj.lName
+                                ? inputObj.fName + ' ' + inputObj.lName
+                                : null,
+                        photoURL: null,
+                    };
+
+                    updateProfile(profileUpdateObj)
                         .then((updated) => {
                             if (updated) {
                                 navigate('/login');

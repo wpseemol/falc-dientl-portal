@@ -1,17 +1,22 @@
-import FromBg from '../../Components/FromBg/FromBg';
-
-import { Link } from 'react-router-dom';
-
 import { useState } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
+import { Link, useNavigate } from 'react-router-dom';
+import FromBg from '../../Components/FromBg/FromBg';
 import FromError from '../../Components/FromError/FromError';
 import LogoSection from '../../Components/LogoSection/LogoSection';
 import { useErrorContext } from '../../context/ErrorMassageContext';
+import { auth } from '../../firebase/firebase';
 
 export default function Login() {
     const [isPassShow, setIsPassShow] = useState(false);
 
+    const navigate = useNavigate();
+
     const [inputObj, setInputObj] = useState({ email: '', password: '' });
+
+    const [signInWithEmailAndPassword, user, loading, error] =
+        useSignInWithEmailAndPassword(auth);
 
     const { isError, setIsError, setErrorMassage } = useErrorContext();
 
@@ -29,7 +34,7 @@ export default function Login() {
                 setErrorMassage('Please Input Password');
                 return;
             } else {
-                if (inputObj.password.length <= 6) {
+                if (inputObj.password.length < 5) {
                     setIsError(true);
                     setErrorMassage('Password must be minimum 6 character');
                     return;
@@ -44,9 +49,18 @@ export default function Login() {
         }
         //form validation
 
-        console.log(inputObj);
-
         //login function
+
+        signInWithEmailAndPassword(inputObj.email, inputObj.password)
+            .then((data) => {
+                if (data) {
+                    navigate('/');
+                }
+            })
+            .catch((e) => {
+                setInputObj({ email: '', password: '' });
+                console.log(e);
+            });
     };
 
     const handelChange = (e) => {
