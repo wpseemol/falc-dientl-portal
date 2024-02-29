@@ -10,15 +10,14 @@ export default function Login() {
     const [isPassShow, setIsPassShow] = useState(false);
     return (
         <FromBg>
-            const [isPassShow, setIsPassShow] = useState(false); return (
             <div className="bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm -mt-3">
                 {/* this is logo section */}
                 <LogoSection />
 
-                <form action="">
+                <form action="" className="">
                     <label
                         htmlFor="email"
-                        className="text-xs font-light px-6 mt-2">
+                        className="text-sm font-light px-6 mt-2">
                         E-mail
                     </label>
                     <br />
@@ -28,14 +27,14 @@ export default function Login() {
                         name="email"
                         id="email"
                         placeholder="example@any.com"
-                        className="focus:outline-none px-6 py-1 text-xl"
+                        className="focus:outline-none px-6 w-screen sm:w-96 py-1 text-xl"
                     />
 
                     <hr />
 
                     <label
                         htmlFor="password"
-                        className="text-xs font-light px-6 mt-2">
+                        className="text-sm font-light px-6 mt-2">
                         Password
                     </label>
 
@@ -46,7 +45,7 @@ export default function Login() {
                             name="password"
                             id="password"
                             placeholder={isPassShow ? 'password' : '******'}
-                            className="focus:outline-none px-6 py-1 text-xl  "
+                            className="focus:outline-none px-6 py-1 text-xl w-screen sm:w-96"
                         />
                         <span
                             onClick={() => {
@@ -71,7 +70,6 @@ export default function Login() {
                     </Link>
                 </div>
             </div>
-            );
         </FromBg>
     );
 }

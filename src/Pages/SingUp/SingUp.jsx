@@ -17,7 +17,7 @@ export default function SingUp() {
                     <form action="">
                         <label
                             htmlFor="fName"
-                            className="text-xs font-light px-6 mt-2">
+                            className="text-sm font-light px-6 mt-2">
                             First Name
                         </label>
                         <br />
@@ -27,14 +27,14 @@ export default function SingUp() {
                             name="fName"
                             id="fName"
                             placeholder="Benjamin"
-                            className="focus:outline-none px-6 py-1 mb-1 text-xl"
+                            className="focus:outline-none px-6 py-1 mb-1 text-xl w-screen sm:w-96"
                         />
 
                         <hr />
 
                         <label
                             htmlFor="lName"
-                            className="text-xs font-light px-6 mt-2">
+                            className="text-sm font-light px-6 mt-2">
                             Last Name
                         </label>
                         <br />
@@ -44,14 +44,14 @@ export default function SingUp() {
                             name="lName"
                             id="lName"
                             placeholder="James"
-                            className="focus:outline-none px-6 py-1 mb-1 text-xl"
+                            className="focus:outline-none px-6 py-1 mb-1 text-xl w-screen sm:w-96"
                         />
 
                         <hr />
 
                         <label
                             htmlFor="email"
-                            className="text-xs font-light px-6 mt-2">
+                            className="text-sm font-light px-6 mt-2">
                             E-mail
                         </label>
                         <br />
@@ -61,14 +61,14 @@ export default function SingUp() {
                             name="email"
                             id="email"
                             placeholder="example@any.com"
-                            className="focus:outline-none px-6 py-1 mb-1 text-xl"
+                            className="focus:outline-none px-6 py-1 mb-1 text-xl w-screen sm:w-96"
                         />
 
                         <hr />
 
                         <label
                             htmlFor="password"
-                            className="text-xs font-light px-6 mt-2">
+                            className="text-sm font-light px-6 mt-2">
                             Password
                         </label>
 
@@ -80,7 +80,7 @@ export default function SingUp() {
                                 name="password"
                                 id="password"
                                 placeholder={isPassShow ? 'password' : '******'}
-                                className="focus:outline-none px-6 py-1 text-xl mb-1  "
+                                className="focus:outline-none px-6 py-1 text-xl mb-1 w-screen sm:w-96 "
                             />
                             <span
                                 onClick={() => {
