@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { BiSolidHide, BiSolidShow } from 'react-icons/bi';
+import { VscLoading } from 'react-icons/vsc';
 import { Link, useNavigate } from 'react-router-dom';
 import FromBg from '../../Components/FromBg/FromBg';
 import FromError from '../../Components/FromError/FromError';
@@ -15,7 +16,7 @@ export default function Login() {
 
     const [inputObj, setInputObj] = useState({ email: '', password: '' });
 
-    const [signInWithEmailAndPassword, user, loading, error] =
+    const [signInWithEmailAndPassword, , loading, error] =
         useSignInWithEmailAndPassword(auth);
 
     const { isError, setIsError, setErrorMassage } = useErrorContext();
@@ -54,7 +55,7 @@ export default function Login() {
         signInWithEmailAndPassword(inputObj.email, inputObj.password)
             .then((data) => {
                 if (data) {
-                    navigate('/');
+                    navigate('/dashboard');
                 }
             })
             .catch((e) => {
@@ -75,6 +76,14 @@ export default function Login() {
             }, 700);
         }
     };
+
+    useEffect(() => {
+        if (error) {
+            setIsError(true);
+            setErrorMassage(error.message);
+            return;
+        }
+    }, [error, setErrorMassage, setIsError]);
 
     return (
         <FromBg>
@@ -132,11 +141,20 @@ export default function Login() {
                         </div>
 
                         <hr />
-                        <input
+                        <button
                             type="submit"
-                            value="Login"
-                            className="w-full py-4 bg-[#03AEF0] text-white font-bold"
-                        />
+                            className="w-full py-4 bg-[#03AEF0] text-white font-bold">
+                            <span className="text-center">
+                                {loading ? (
+                                    <span className="flex justify-center items-center gap-2 cursor-wait">
+                                        <VscLoading className="animate-spin text-3xl" />
+                                        Loading...
+                                    </span>
+                                ) : (
+                                    <span>Login</span>
+                                )}
+                            </span>
+                        </button>
                     </form>
                     <div className="text-[#03AEF0] text-sm py-3 text-center">
                         {`Don't have an account?`}{' '}
