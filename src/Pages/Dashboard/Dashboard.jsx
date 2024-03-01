@@ -3,9 +3,10 @@ import DashboardMenu from '../../Components/DashboardMenu/DashboardMenu';
 
 export default function Dashboard() {
     return (
-        <div className="flex gap-3">
+        <div className="flex gap-3 ">
             <DashboardMenu />
-            <div>
+
+            <div className="sm:flex sm:gap-2">
                 <Outlet />
             </div>
         </div>
