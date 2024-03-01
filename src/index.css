@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .active {
-    @apply bg-[#37383b] pr-5 p-2 rounded-sm;
+    @apply bg-[#37383b] pr-5 p-2 pl-6 rounded-sm w-full flex items-center gap-2;
 }
 
 .hoverActive {
-    @apply hover:bg-[#37383b] hover:pr-5 hover:p-2 hover:rounded-sm duration-300;
+    @apply hover:bg-[#37383b] hover:pr-5 hover:pl-6 hover:p-2 hover:rounded-sm duration-300;
 }
