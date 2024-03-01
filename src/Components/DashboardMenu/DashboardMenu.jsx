@@ -4,14 +4,19 @@ import { NavLink } from 'react-router-dom';
 import DashboardUser from '../DashboardUser/DashboardUser';
 import MenuIcon from '../MenuIcon/MenuIcon';
 
+import { useSignOut } from 'react-firebase-hooks/auth';
 import addApplication from '../../assets/icon/add-employee.png';
 import dashboardIcon from '../../assets/icon/analysis.png';
 import application from '../../assets/icon/monitor.png';
 import setting from '../../assets/icon/process.png';
 import support from '../../assets/icon/technical-support.png';
+import { auth } from '../../firebase/firebase';
+import DashboardLogo from '../DashboardLogo/DashboardLogo';
 
 export default function DashboardMenu() {
     const [isOpen, setIsClose] = useState(false);
+
+    const [signOut, loading] = useSignOut(auth);
 
     const dashboardMenus = [
         { id: 1, path: '/dashboard', menu: 'Dashboard', icon: dashboardIcon },
@@ -42,8 +47,8 @@ export default function DashboardMenu() {
                 className={`${
                     isOpen
                         ? 'w-0 duration-150'
-                        : '2xl:w-2/12 xl:w-3/12 lg:w-2/6  md:w-2/5 sm:w-2/3 w-4/6 duration-300 p-2'
-                } bg-[#202024] text-neutral-300 h-screen md:relative fixed top-0 left-0`}>
+                        : '2xl:w-2/12 xl:w-3/12 lg:w-2/6  md:w-2/5 sm:w-2/3 w-5/6 duration-300 p-2'
+                } bg-[#202024] text-neutral-300 h-screen md:relative fixed top-0 left-0 z-10`}>
                 <div
                     className=" border w-fit h-fit bg-neutral-100 p-3 md:hidden
                     absolute -right-12 top-2 rounded-r-lg shadow-xl
@@ -54,7 +59,8 @@ export default function DashboardMenu() {
 
                 <div className="h-full flex flex-col justify-between">
                     <div className="overflow-hidden">
-                        <div className="bg-[#37383b]"></div>
+                        <DashboardLogo />
+
                         <ul className=" ">
                             {dashboardMenus.map((menu) => (
                                 <li key={menu.id} className="capitalize m-2 ">
@@ -81,8 +87,15 @@ export default function DashboardMenu() {
                                 </li>
                             ))}
 
+                            {/* logout button here */}
                             <li className="capitalize m-2">
-                                <button className="flex items-center gap-2 font-bold hoverActive p-2 pl-6 w-full">
+                                <button
+                                    className={`${
+                                        loading ? 'cursor-wait' : ''
+                                    } flex items-center gap-2 font-bold hoverActive p-2 pl-6 w-full`}
+                                    onClick={async () => {
+                                        await signOut();
+                                    }}>
                                     <span className="text-white">
                                         <BiLogOutCircle />
                                     </span>{' '}

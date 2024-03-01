@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .active {
-    @apply bg-[#37383b] pr-5 p-2 pl-6 rounded-sm w-full flex items-center gap-2;
+    @apply bg-[#37383b] pr-5 p-2 pl-6 rounded-sm w-full flex items-center gap-2 border border-[#5e5f64];
 }
 
 .hoverActive {
